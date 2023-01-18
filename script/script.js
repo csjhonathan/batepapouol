@@ -102,7 +102,7 @@ function sideMenu() {
 
 function sendMsg() {
     const msg = {
-        from: userN,
+        from: user,
         to: selectedReceiverUser,
         text: msgInput.value,
         type: 'message'
