@@ -6,7 +6,8 @@ const userName = {
     name: user
 };
 const msgInput = document.querySelector('.footer input');
-
+let logedUsersArea = document.querySelector('.loggedUsers');
+let selectedReceiverUser = 'Todos';
 
 
 //armazenamentos de nome do usuário para usos futuros;
@@ -31,6 +32,10 @@ let succesfully = function (succesfull) {
         }, 3000);
         //disconected();
     }
+    getParticipants ();
+    setInterval(function () {
+        getParticipants ();
+    }, 10*1000);
 }
 
 loginVerification();
@@ -97,8 +102,8 @@ function sideMenu() {
 
 function sendMsg() {
     const msg = {
-        from: user,
-        to: 'Todos',
+        from: userN,
+        to: selectedReceiverUser,
         text: msgInput.value,
         type: 'message'
     }
@@ -115,5 +120,31 @@ msgInput.addEventListener('keyup', (event) => {
 })
 
 
+function getParticipants (){
+    const participants = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
 
-// `<p class="${type}">(${time}) <span>${from}</span> para <span>${to}</span>: ${text}</p>`
+    participants
+    .then(participantsInfo)
+    .catch(participantsFail)
+}
+
+function participantsInfo (participantsObj){
+    logedUsersArea.innerHTML = '';
+    const loggedUser = participantsObj.data;
+    for(let i = 0; i < loggedUser.length; i++){
+        logedUsersArea.innerHTML += `<li onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>`
+    }
+    
+}
+
+function participantsFail(participantsFailObj){
+}
+
+function selectUser(user){
+    let selectedUser = document.querySelector('.checkmark.showCheckmark');
+    if(selectedUser !== null){
+        selectedUser.classList.remove('showCheckmark')
+    }
+    user.querySelector('.checkmark').classList.add('showCheckmark')
+    selectedReceiverUser = user.innerText;        
+}

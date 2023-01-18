@@ -43,7 +43,7 @@ ion-icon:hover {
     background: #F3F3F3;
     padding-top: 26px;
     height: 100%;
-    overflow-y:scroll;
+    overflow-y: scroll;
 }
 
 .chat p {
@@ -71,6 +71,7 @@ ion-icon:hover {
 span {
     font-weight: 700;
 }
+
 .footer {
     background: #FFFFFF;
     width: 100%;
@@ -138,21 +139,55 @@ span {
     align-items: center;
     width: 259px;
     height: 84px;
-
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
 }
-.sidebar .visibility li{
+
+.loggedUsers li {
+    width: 100%;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    height: 36px;
+    align-items: center;
+    padding-left: 18px;
+
+}
+
+li ion-icon {
+    Width: 21px;
+    Height: 21px;
+    margin-right: 8px;
+}
+
+.sidebar .visibility li {
     cursor: pointer;
 }
 
-.sidebar .visibility p{
+.sidebar .visibility p {
+    height: 66px;
     display: flex;
-    justify-content:center;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
 }
+
 .hidden {
     width: 0%;
     opacity: 0;
     z-index: -1;
+}
+
+.checkmark {
+    color: #28BB25;
+    width: 18px;
+    height: 16px;
+    display: none;
+}
+
+.showCheckmark {
+    display: initial;
 }
