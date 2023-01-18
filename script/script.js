@@ -8,6 +8,7 @@ const userName = {
 const msgInput = document.querySelector('.footer input');
 let logedUsersArea = document.querySelector('.loggedUsers');
 let selectedReceiverUser = 'Todos';
+let msgType = 'message';
 
 
 //armazenamentos de nome do usuário para usos futuros;
@@ -17,9 +18,6 @@ const usernameMessageToInput = document.querySelector('.message .to');
 const usernamePrivateMessageFromInput = document.querySelector('.privateMessage .from');
 const usernamePrivateMessageToInput = document.querySelector('.privateMessage .to');
 
-const selectVisibility = function (visibility) {
-    return visibility.innerHTML
-}
 
 let succesfully = function (succesfull) {
     const status = succesfull.status;
@@ -32,10 +30,10 @@ let succesfully = function (succesfull) {
         }, 3000);
         //disconected();
     }
-    getParticipants ();
+    getParticipants();
     setInterval(function () {
-        getParticipants ();
-    }, 10*1000);
+        getParticipants();
+    }, 10 * 1000);
 }
 
 loginVerification();
@@ -54,19 +52,21 @@ function keepConeted() {
 
     promiseKeep
         .then(userkeepConected)
-        .catch(userDontKeeeped)
+        .catch(userDontKeeped)
 }
 
 function userkeepConected(conected) {
+
 }
 
-function userDontKeeeped(disconected) {
-
+function userDontKeeped(disconected) {
+    alert('você foi desconectado')
+    window.location.reload();
 }
 
 
 function failed(notGreat) {
-    alert('ce ta on')
+    alert('usuário conectado/outro erro')
     window.location.reload();
 }
 
@@ -82,9 +82,18 @@ function getMessages() {
 
 function msgConstructor(log) {
     let acc = '';
-
     log.forEach(({ type, time, from, to, text }) => {
-        acc += `<p class="${type}">(${time}) <span>${from}</span> para <span>${to}</span>: ${text}</p>`
+
+        if (type === 'status') {
+            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+        }
+        if (type === 'message') {
+            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+        }
+        if (type === 'private_message' && (user === from || user === to)) {
+            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+        }
+        // acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
     })
 
     return acc;
@@ -105,7 +114,7 @@ function sendMsg() {
         from: user,
         to: selectedReceiverUser,
         text: msgInput.value,
-        type: 'message'
+        type: msgType
     }
     const promiseSendMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
 
@@ -120,31 +129,48 @@ msgInput.addEventListener('keyup', (event) => {
 })
 
 
-function getParticipants (){
+function getParticipants() {
     const participants = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
 
     participants
-    .then(participantsInfo)
-    .catch(participantsFail)
+        .then(participantsInfo)
+        .catch(participantsFail)
 }
 
-function participantsInfo (participantsObj){
-    logedUsersArea.innerHTML = '';
+function participantsInfo(participantsObj) {
+    logedUsersArea.innerHTML = `<li onclick='selectUser(this)'><ion-icon name="people"></ion-icon>Todos<ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>`;
     const loggedUser = participantsObj.data;
-    for(let i = 0; i < loggedUser.length; i++){
+    for (let i = 0; i < loggedUser.length; i++) {
         logedUsersArea.innerHTML += `<li onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>`
     }
-    
+
 }
 
-function participantsFail(participantsFailObj){
+function participantsFail(participantsFailObj) {
 }
 
-function selectUser(user){
-    let selectedUser = document.querySelector('.checkmark.showCheckmark');
-    if(selectedUser !== null){
+function selectUser(user) {
+    let userArea = document.querySelector('.loggedUsers')
+    let selectedUser = userArea.querySelector('.checkmark.showCheckmark');
+    if (selectedUser !== null) {
         selectedUser.classList.remove('showCheckmark')
     }
     user.querySelector('.checkmark').classList.add('showCheckmark')
-    selectedReceiverUser = user.innerText;        
+    selectedReceiverUser = user.innerText;
+}
+
+function selectVisibility(visibility) {
+    let visibilityArea = document.querySelector('.visibility');
+    let selectedVisibility = visibilityArea.querySelector('.checkmark.showCheckmark');
+
+    if (visibility.innerText === 'Público') {
+        msgType = 'message';
+    } else if (visibility.innerText === 'Reservadamente') {
+        msgType = 'private_message';
+    }
+
+    if (selectedVisibility !== null) {
+        selectedVisibility.classList.remove('showCheckmark');
+    }
+    visibility.querySelector('.checkmark').classList.add('showCheckmark');
 }
