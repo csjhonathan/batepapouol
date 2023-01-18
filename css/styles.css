@@ -43,6 +43,7 @@ ion-icon:hover {
     background: #F3F3F3;
     padding-top: 26px;
     height: 100%;
+    overflow-y:scroll;
 }
 
 .chat p {
@@ -55,7 +56,7 @@ ion-icon:hover {
     word-break: break-word;
 }
 
-.chat .notification {
+.chat .status {
     background: #DCDCDC;
 }
 
@@ -63,7 +64,7 @@ ion-icon:hover {
     background: #FFFFFF;
 }
 
-.chat .privateMessage {
+.chat .private_message {
     background: #FFDEDE;
 }
 
@@ -128,6 +129,7 @@ span {
 .sidebar .contact {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .sidebar .contact p {
@@ -141,7 +143,16 @@ span {
     font-size: 16px;
     line-height: 19px;
 }
+.sidebar .visibility li{
+    cursor: pointer;
+}
 
+.sidebar .visibility p{
+    display: flex;
+    justify-content:center;
+}
 .hidden {
     width: 0%;
+    opacity: 0;
+    z-index: -1;
 }

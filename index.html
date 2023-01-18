@@ -28,7 +28,7 @@
             <button  onclick="sendMsg()" type="submit"><ion-icon name="paper-plane-outline"></ion-icon></button>
         </div>
 
-        <div class="sidebar-background hidden" onclick="sideMenu()">
+        <div class="sidebar-background hidden" onclick="sideMenu()"></div>
             <div class="sidebar hidden">
 
                 <div class="contact">
@@ -42,17 +42,18 @@
                 <div class="visibility">
                     <p>Escolha a visibilidade:</p>
                     <ul>
-                        <li onclick="visibility(this)">Público</li>
-                        <li onclick="visibility(this)">Reservadamente</li>
+                        <li onclick="selectVisibility(this)">Público</li>
+                        <li onclick="selectVisibility(this)">Reservadamente</li>
                     </ul>
                 </div>
             </div>
-        </div>
+        
     </div>
 
 
     <!--SCRIPTS IMPORTS-->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./script/script.js"></script>
 </body>
 
