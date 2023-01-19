@@ -125,9 +125,7 @@ function sideMenu() {
 }
 
 function sendMsg() {
-    axios
-    .post('https://mock-api.driven.com.br/api/v6/uol/status', userName)
-    .cath(userDontKeeped);
+    
 
     const msg = {
         from: user,
@@ -139,6 +137,10 @@ function sendMsg() {
 
     promiseSendMsg.then(msgConstructor)
     msgInput.value = '';
+    
+    axios
+    .post('https://mock-api.driven.com.br/api/v6/uol/status', userName)
+    .cath(userDontKeeped);
 }
 
 
