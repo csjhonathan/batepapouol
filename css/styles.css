@@ -3,7 +3,9 @@
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
+::-webkit-scrollbar{
+    display: none;
+}
 body {
     font-family: 'Roboto', sans-serif;
 }
@@ -150,13 +152,15 @@ span {
     height: 40px;
     border: none;
 }
-.footer input::-webkit-input-placeholder  { 
+
+.footer input::-webkit-input-placeholder {
     font-style: italic;
     font-weight: 400;
     font-size: 18px;
     line-height: 25px;
     color: black;
 }
+
 .footer input:focus {
     outline: none;
 }
@@ -173,7 +177,8 @@ span {
     top: 35%;
     right: 2%;
 }
-.footer div{
+
+.footer div {
     display: flex;
     flex-direction: column;
 }
@@ -286,4 +291,43 @@ li {
 li:hover {
     color: rgba(194, 194, 194, 0.99);
     transition: all .3s;
+}
+
+@media (min-width: 600px) {
+    .loginPage .logoPage {
+        width: 130px;
+        height: 92px;
+        margin-top: 5%;
+    }
+    
+    .loginPage input {
+        width: 261px;
+        height: 54px;
+        text-align: center;
+        margin-top: 5%;
+        background: #FFFFFF;
+        border: 1px solid #D7D7D7;
+        border-radius: 4px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 25px;
+        color: #AEAEAE;
+    }
+    
+    .loginPage input:focus {
+        outline: none;
+    }
+    
+    .loginPage button {
+        width: 109px;
+        height: 45px;
+        margin-top: 1%;
+        background: #E7E7E7;
+        border-radius: 9px;
+        border: none;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 25px;
+        color: #696969;
+    }
 }
