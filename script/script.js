@@ -103,13 +103,13 @@ function msgConstructor(log) {
     log.forEach(({ type, time, from, to, text }) => {
 
         if (type === 'status') {
-            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+            acc += `<p data-test="message" class="${type}"><span class="clock">(${time})</span> <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
         }
         if (type === 'message') {
-            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+            acc += `<p data-test="message" class="${type}"><span class="clock">(${time})</span> <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
         }
         if (type === 'private_message' && (user === from || user === to)) {
-            acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
+            acc += `<p data-test="message" class="${type}"><span class="clock">(${time})</span> <span class="from">${from}</span> reservadamente para <span class="to">${to}</span>: ${text}</p>`
         }
     })
 
@@ -151,10 +151,10 @@ function getParticipants() {
 }
 
 function participantsInfo(participantsObj) {
-    logedUsersArea.innerHTML = `<li onclick='selectUser(this)'><ion-icon name="people"></ion-icon>Todos<ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>`;
+    logedUsersArea.innerHTML = `<li data-test="all" onclick='selectUser(this)'><ion-icon name="people"></ion-icon>Todos<ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>`;
     const loggedUser = participantsObj.data;
     for (let i = 0; i < loggedUser.length; i++) {
-        logedUsersArea.innerHTML += `<li onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>`
+        logedUsersArea.innerHTML += `<li data-test="participant" data-identifier="participant" onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>`
     }
 
 }

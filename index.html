@@ -18,13 +18,13 @@
 
         <form class="loginPage">
             <img class="logoPage" src="./assets/logo 1.png" alt="chat uol logo">
-            <input type="text" name="digite seu nome" placeholder="Digite seu nome" required>
-            <button > Entrar </button>
+            <input data-test="input-name" data-identifier="enter-name" type="text" name="digite seu nome" placeholder="Digite seu nome" required>
+            <button data-test="send-name" data-identifier="start"> Entrar </button>
         </form>
 
         <div class="header">
             <img src="./assets/logo 1.png" alt="chat uol logo">
-            <ion-icon name="people" onclick="sideMenu()"></ion-icon>
+            <ion-icon data-test="open-participants" name="people" onclick="sideMenu()"></ion-icon>
         </div>
 
         <div class="chat">
@@ -32,10 +32,10 @@
 
         <div class="footer">
             <div>
-            <input type="text" placeholder="Escreva aqui...">
-            <p></p>
+            <input data-test="input-message" type="text" placeholder="Escreva aqui...">
+            <p data-test="recipient" class="recipient"></p>
             </div>
-            <button  onclick="sendMsg()" type="submit"><ion-icon name="paper-plane-outline"></ion-icon></button>
+            <button data-test="send-message" onclick="sendMsg()" type="submit"><ion-icon name="paper-plane-outline"></ion-icon></button>
             
         </div>
 
@@ -54,8 +54,8 @@
                 <div class="visibility">
                     <p>Escolha a visibilidade:</p>
                     <ul>
-                        <li onclick="selectVisibility(this)" class= "lock-open"> <ion-icon name="lock-open"></ion-icon> Público <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>
-                        <li onclick="selectVisibility(this)" class="lock-closed"> <ion-icon name="lock-closed"></ion-icon> Reservadamente <ion-icon class="checkmark" name="checkmark-sharp"></ion-icon></li>
+                        <li data-test="public" data-identifier="visibility" onclick="selectVisibility(this)" class= "lock-open"> <ion-icon name="lock-open"></ion-icon> Público <ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>
+                        <li data-test="private" data-identifier="visibility" onclick="selectVisibility(this)" class="lock-closed"> <ion-icon name="lock-closed"></ion-icon> Reservadamente <ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>
                     </ul>
                 </div>
             </div>

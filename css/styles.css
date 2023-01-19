@@ -287,7 +287,10 @@ li {
 .showCheckmark {
     display: initial;
 }
-
+.clock{
+    color:#AAAAAA;
+    font-weight: 400;
+}
 li:hover {
     color: rgba(194, 194, 194, 0.99);
     transition: all .3s;
