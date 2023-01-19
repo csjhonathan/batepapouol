@@ -65,14 +65,12 @@ function keepConeted() {
 
     promiseKeep
         .then(userkeepConected)
-        .catch(userDontKeeped)
 }
 
 function userkeepConected(conected) {
 }
 
 function userDontKeeped(disconected) {
-    alert('você foi desconectado')
     window.location.reload();
 }
 
@@ -127,6 +125,10 @@ function sideMenu() {
 }
 
 function sendMsg() {
+    axios
+    .post('https://mock-api.driven.com.br/api/v6/uol/status', userName)
+    .cath(userDontKeeped);
+
     const msg = {
         from: user,
         to: selectedReceiverUser,
