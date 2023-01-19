@@ -1,7 +1,8 @@
 const sideMenuContainer = document.querySelector('.sidebar-background');
 const sidebarMenuContent = document.querySelector('.sidebar');
 const chat = document.querySelector('.chat')
-let user = prompt('Seu nome:');
+const loginPage = document.querySelector('.loginPage');
+let user = '';
 const userName = {
     name: user
 };
@@ -9,6 +10,8 @@ const msgInput = document.querySelector('.footer input');
 let logedUsersArea = document.querySelector('.loggedUsers');
 let selectedReceiverUser = 'Todos';
 let msgType = 'message';
+let privacityArea =  document.querySelector('.footer p');
+    privacityArea.innerHTML = `Enviando para ${selectedReceiverUser} (Público)`;
 
 
 //armazenamentos de nome do usuário para usos futuros;
@@ -19,32 +22,42 @@ const usernamePrivateMessageFromInput = document.querySelector('.privateMessage 
 const usernamePrivateMessageToInput = document.querySelector('.privateMessage .to');
 
 
-let succesfully = function (succesfull) {
-    const status = succesfull.status;
+let successfully = function (successfull) {
+    const status =
+        successfull.status;
 
     if (status === 200) {
-        user = JSON.parse(succesfull.config.data).name;
+        user = JSON.parse(
+            successfull.config.data).name;
         getMessages();
         setInterval(function () {
             getMessages();
         }, 3000);
-        //disconected();
     }
     getParticipants();
     setInterval(function () {
         getParticipants();
     }, 10 * 1000);
+
+
+    loginPage.classList.add('hiddenLoggin')
+
+
 }
 
-loginVerification();
+
 function loginVerification() {
+    user = loginPage.querySelector('input').value;
+    userName.name = user;
     const promiseName = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userName);
-    promiseName.then(succesfully);
+    promiseName.then(successfully);
     promiseName.catch(failed);
 
     setInterval(() => {
         keepConeted()
     }, 5000);
+
+    loginPage.innerHTML = `<img src="./assets/Quarter-Circle-Loading-Image-1.gif" alt="">`;
 }
 
 function keepConeted() {
@@ -56,7 +69,6 @@ function keepConeted() {
 }
 
 function userkeepConected(conected) {
-
 }
 
 function userDontKeeped(disconected) {
@@ -66,7 +78,13 @@ function userDontKeeped(disconected) {
 
 
 function failed(notGreat) {
-    alert('usuário conectado/outro erro')
+    const statusError = notGreat.response.status;
+    if (statusError === 400) {
+        alert('nome de usuário em uso')
+    } else {
+        alert('erro de conexão')
+    }
+
     window.location.reload();
 }
 
@@ -93,7 +111,6 @@ function msgConstructor(log) {
         if (type === 'private_message' && (user === from || user === to)) {
             acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
         }
-        // acc += `<p class="${type}">(${time}) <span class="from">${from}</span> para <span class="to">${to}</span>: ${text}</p>`
     })
 
     return acc;
@@ -122,11 +139,7 @@ function sendMsg() {
     msgInput.value = '';
 }
 
-msgInput.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') {
-        sendMsg();
-    }
-})
+
 
 
 function getParticipants() {
@@ -150,13 +163,17 @@ function participantsFail(participantsFailObj) {
 }
 
 function selectUser(user) {
+
+    
     let userArea = document.querySelector('.loggedUsers')
     let selectedUser = userArea.querySelector('.checkmark.showCheckmark');
     if (selectedUser !== null) {
         selectedUser.classList.remove('showCheckmark')
     }
     user.querySelector('.checkmark').classList.add('showCheckmark')
-    selectedReceiverUser = user.innerText;
+    selectedReceiverUser = user.innerText; 
+    
+    templaceChanger(msgType, selectedReceiverUser)
 }
 
 function selectVisibility(visibility) {
@@ -173,4 +190,23 @@ function selectVisibility(visibility) {
         selectedVisibility.classList.remove('showCheckmark');
     }
     visibility.querySelector('.checkmark').classList.add('showCheckmark');
+    templaceChanger(msgType, selectedReceiverUser);
 }
+function templaceChanger(msgType, selectedReceiverUser){
+    if(msgType==='message'){
+        privacityArea.innerHTML = `Enviando para ${selectedReceiverUser} (Público)`;
+    }else if(msgType==='private_message'){
+        privacityArea.innerHTML = `Enviando para ${selectedReceiverUser} (Reservadamente)` ;
+    }
+}
+loginPage.querySelector('button').addEventListener('click', (e) => {
+    let inputLogin = loginPage.querySelector('input');
+    if (!inputLogin.value) return;
+    loginVerification();
+    e.preventDefault();
+})
+msgInput.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        sendMsg();
+    }
+})
