@@ -67,7 +67,7 @@ const successfully = function (successfull) {
     }, getParticipantsInterval);
 
     loginPage.classList.add('hiddenLoggin');
-}
+};
 
 function getMessages() {
     const promiseLogMsg = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -142,7 +142,7 @@ function participantsInfo(participantsObj) {
     const loggedUser = participantsObj.data;
     for (let i = 0; i < loggedUser.length; i++) {
         logedUsersArea.innerHTML += `<li data-test="participant" data-identifier="participant" onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>`
-    };
+    }
 
 }
 
@@ -153,7 +153,7 @@ function selectUser(user) {
     let selectedUser = userArea.querySelector('.checkmark.showCheckmark');
     if (selectedUser !== null) {
         selectedUser.classList.remove('showCheckmark');
-    };
+    }
     user.querySelector('.checkmark').classList.add('showCheckmark');
     selectedReceiverUser = user.innerText;
 
@@ -188,9 +188,9 @@ loginPage.querySelector('button').addEventListener('click', (e) => {
     if (!inputLogin.value) return;
     loginVerification();
     e.preventDefault();
-})
+});
 msgInput.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         sendMsg();
     }
-})
+});
