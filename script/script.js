@@ -16,7 +16,7 @@ const keepConetedInterval = 5000;
 const getMessagesInterval = 3000;
 const usedUserName = 400;
 const successfullLogin = 200;
-const getParticipantsInterval = 10 * 1000;
+const getParticipantsInterval = 10000;
 
 //armazenamentos de nome do usuário para usos futuros;
 const usernameNotificationInput = document.querySelector('.notification .from');
@@ -39,7 +39,7 @@ function loginVerification() {
     }, keepConetedInterval);
 
     loginPage.innerHTML = `<img src="./assets/Quarter-Circle-Loading-Image-1.gif" alt="">`;
-};
+}
 
 function failed(notGreat) {
     const statusError = notGreat.response.status;
@@ -49,7 +49,7 @@ function failed(notGreat) {
         alert('erro de conexão');
     }
     window.location.reload();
-};
+}
 
 const successfully = function (successfull) {
     const status = successfull.status;
@@ -67,7 +67,7 @@ const successfully = function (successfull) {
     }, getParticipantsInterval);
 
     loginPage.classList.add('hiddenLoggin');
-};
+}
 
 function getMessages() {
     const promiseLogMsg = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
@@ -77,7 +77,7 @@ function getMessages() {
         .then(msgConstructor)
         .then(chatRender);
 
-};
+}
 
 function msgConstructor(log) {
     let acc = '';
@@ -92,25 +92,25 @@ function msgConstructor(log) {
     });
 
     return acc;
-};
+}
 
 function chatRender(logChat) {
     chat.innerHTML = logChat;
     chat.querySelector('p:last-child').scrollIntoView();
-};
+}
 
 function keepConeted() {
     const promiseKeep = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userName);
-};
+}
 
 function userDontKeeped(disconected) {
     window.location.reload();
-};
+}
 
 function sideMenu() {
     sideMenuContainer.classList.toggle('hidden');
     sidebarMenuContent.classList.toggle('hidden');
-};
+}
 
 function sendMsg() {
 
@@ -128,14 +128,14 @@ function sendMsg() {
     axios
         .post('https://mock-api.driven.com.br/api/v6/uol/status', userName)
         .catch(userDontKeeped);
-};
+}
 
 function getParticipants() {
     const participants = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
 
     participants
         .then(participantsInfo);
-};
+}
 
 function participantsInfo(participantsObj) {
     logedUsersArea.innerHTML = `<li data-test="all" onclick='selectUser(this)'><ion-icon name="people"></ion-icon>Todos<ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>`;
@@ -144,12 +144,12 @@ function participantsInfo(participantsObj) {
         logedUsersArea.innerHTML += `<li data-test="participant" data-identifier="participant" onclick='selectUser(this)'> <ion-icon name="person-circle"></ion-icon> ${loggedUser[i].name} <ion-icon data-test="check" class="checkmark" name="checkmark-sharp"></ion-icon></li>`
     };
 
-};
+}
 
 function selectUser(user) {
 
 
-    let userArea = document.querySelector('.loggedUsers');
+    const userArea = document.querySelector('.loggedUsers');
     let selectedUser = userArea.querySelector('.checkmark.showCheckmark');
     if (selectedUser !== null) {
         selectedUser.classList.remove('showCheckmark');
@@ -158,7 +158,7 @@ function selectUser(user) {
     selectedReceiverUser = user.innerText;
 
     templateChanger(msgType, selectedReceiverUser);
-};
+}
 
 function selectVisibility(visibility) {
     const visibilityArea = document.querySelector('.visibility');
@@ -175,22 +175,22 @@ function selectVisibility(visibility) {
     }
     visibility.querySelector('.checkmark').classList.add('showCheckmark');
     templateChanger(msgType, selectedReceiverUser);
-};
+}
 function templateChanger(msgType, selectedReceiverUser) {
     if (msgType === 'message') {
         privacityArea.innerHTML = `Enviando para ${selectedReceiverUser} (Público)`;
     } else if (msgType === 'private_message') {
         privacityArea.innerHTML = `Enviando para ${selectedReceiverUser} (Reservadamente)`;
     }
-};
+}
 loginPage.querySelector('button').addEventListener('click', (e) => {
     const inputLogin = loginPage.querySelector('input');
     if (!inputLogin.value) return;
     loginVerification();
     e.preventDefault();
-});
+})
 msgInput.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         sendMsg();
     }
-});
+})
