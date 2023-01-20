@@ -23,8 +23,7 @@ const usernamePrivateMessageToInput = document.querySelector('.privateMessage .t
 
 
 let successfully = function (successfull) {
-    const status =
-        successfull.status;
+    const status = successfull.status;
 
     if (status === 200) {
         user = JSON.parse(
@@ -135,7 +134,7 @@ function sendMsg() {
     }
     const promiseSendMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
 
-    promiseSendMsg.then(msgConstructor)
+    promiseSendMsg.then(getMessages)
     msgInput.value = '';
 
     axios
