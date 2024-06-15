@@ -30,7 +30,7 @@ function loginVerification() {
 
     user = loginPage.querySelector('input').value;
     userName.name = user;
-    const promiseName = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', userName);
+    const promiseName = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants/04c9b95d-f0cd-470e-8a83-02ec78729094', userName);
     promiseName.then(successfully);
     promiseName.catch(failed);
 
@@ -70,7 +70,7 @@ const successfully = function (successfull) {
 };
 
 function getMessages() {
-    const promiseLogMsg = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
+    const promiseLogMsg = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages/04c9b95d-f0cd-470e-8a83-02ec78729094');
 
     promiseLogMsg
         .then((logData) => logData.data)
@@ -100,7 +100,7 @@ function chatRender(logChat) {
 }
 
 function keepConeted() {
-    const promiseKeep = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', userName);
+   axios.post('https://mock-api.driven.com.br/api/v6/uol/status/04c9b95d-f0cd-470e-8a83-02ec78729094', userName);
 }
 
 function userDontKeeped(disconected) {
@@ -120,18 +120,18 @@ function sendMsg() {
         text: msgInput.value,
         type: msgType
     }
-    const promiseSendMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', msg);
+    const promiseSendMsg = axios.post('https://mock-api.driven.com.br/api/v6/uol/messages/04c9b95d-f0cd-470e-8a83-02ec78729094', msg);
 
     promiseSendMsg.then(getMessages);
     msgInput.value = '';
 
     axios
-        .post('https://mock-api.driven.com.br/api/v6/uol/status', userName)
+        .post('https://mock-api.driven.com.br/api/v6/uol/status/04c9b95d-f0cd-470e-8a83-02ec78729094', userName)
         .catch(userDontKeeped);
 }
 
 function getParticipants() {
-    const participants = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
+    const participants = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants/04c9b95d-f0cd-470e-8a83-02ec78729094');
 
     participants
         .then(participantsInfo);
